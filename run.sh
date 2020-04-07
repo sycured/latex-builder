@@ -7,6 +7,8 @@ buildah run "$mkimg" -- pacman -Syyu --noconfirm
 buildah run "$mkimg" -- pacman -S --noconfirm biber cmake ghostscript grep ninja tar texlive-latexextra texlive-fontsextra
 buildah run "$mkimg" -- pacman -Scc --noconfirm
 buildah run "$mkimg" -- ln -s /usr/bin/vendor_perl/biber /usr/bin/biber
+buildah run "$mkimg" -- mkdir /shared
+buildah config --workingdir='/shared' $mkimg
 mntimg=$(buildah mount $mkimg)
 rm -rf $mntimg/var/cache/pacman/pkg/*
 git clone https://gitlab.kitware.com/kmorel/UseLATEX.git
