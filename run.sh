@@ -9,6 +9,7 @@ buildah run "$mkimg" -- pacman -Scc --noconfirm
 buildah run "$mkimg" -- ln -s /usr/bin/vendor_perl/biber /usr/bin/biber
 buildah run "$mkimg" -- mkdir /shared
 buildah config --workingdir='/shared' $mkimg
+buildah config --entrypoint='/shared/run.sh' $mkimg
 mntimg=$(buildah mount $mkimg)
 rm -rf $mntimg/var/cache/pacman/pkg/*
 git clone https://gitlab.kitware.com/kmorel/UseLATEX.git
