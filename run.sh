@@ -4,7 +4,8 @@ mkimg=$(buildah from archlinux)
 buildah config --author='sycured' $mkimg
 buildah config --label Name='latex-builder' $mkimg
 buildah run "$mkimg" -- pacman -Syyu --noconfirm
-buildah run "$mkimg" -- pacman -S --noconfirm biber cmake ghostscript grep ninja tar texlive-latexextra texlive-fontsextra
+buildah run "$mkimg" -- pacman -S --noconfirm biber cmake ghostscript grep ninja tar texlive-latexextra texlive-fontsextra python-pip
+buildah run "$mkimg" -- pip install --no-cache-dir blacktex
 buildah run "$mkimg" -- pacman -Scc --noconfirm
 buildah run "$mkimg" -- ln -s /usr/bin/vendor_perl/biber /usr/bin/biber
 buildah run "$mkimg" -- mkdir /shared
