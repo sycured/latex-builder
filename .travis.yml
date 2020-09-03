@@ -15,10 +15,13 @@ addons:
 
 script:
 - echo $quayiopassword | buildah login -u $quayiouser --password-stdin quay.io
+- echo $githubtoken | buildah login -u $quayiouser --password-stdin docker.pkg.github.com
 - sudo ./run.sh
 
 after_success:
 - sudo buildah push latex-builder:latest docker://quay.io/$quayiouser/latex-builder:latest
+- sudo buildah push latex-builder:latest docker://docker.pkg.github.com/$quayiouser/latex-builder/latex-builder:latest
 
 after_script:
 - buildah logout quay.io
+- buildah logout docker.pkg.github.com
