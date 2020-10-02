@@ -9,7 +9,7 @@ buildah run "$mkimg" -- apk add bash biber cmake ghostscript ninja py3-pip texli
 buildah run "$mkimg" -- pip install --no-cache-dir blacktex
 buildah run "$mkimg" -- mkdir /shared
 buildah config --workingdir='/shared' "$mkimg"
-buildah config --entrypoint='/shared/run.sh' "$mkimg"
+buildah config --entrypoint='./run.sh' "$mkimg"
 mntimg=$(buildah mount "$mkimg")
 rm -rf "$mntimg"/var/cache/apk/*
 git clone https://gitlab.kitware.com/kmorel/UseLATEX.git
