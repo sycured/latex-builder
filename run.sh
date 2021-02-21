@@ -5,11 +5,8 @@ buildah config --author='sycured' "$mkimg"
 buildah config --label Name='latex-builder' "$mkimg"
 buildah run "$mkimg" -- apk update
 buildah run "$mkimg" -- apk upgrade
-buildah run "$mkimg" -- apk add bash biber cmake ghostscript ninja py3-pip texlive texlive-dvi texmf-dist-latexextra texmf-dist-fontsextra
+buildah run "$mkimg" -- apk add bash biber cmake coreutils ghostscript ninja py3-pip rclone texlive texlive-dvi texmf-dist-latexextra texmf-dist-fontsextra
 buildah run "$mkimg" -- pip install --no-cache-dir blacktex
-buildah run "$mkimg" -- mkdir /shared
-buildah config --workingdir='/shared' "$mkimg"
-buildah config --entrypoint='./run.sh' "$mkimg"
 mntimg=$(buildah mount "$mkimg")
 rm -rf "$mntimg"/var/cache/apk/*
 git clone https://gitlab.kitware.com/kmorel/UseLATEX.git
