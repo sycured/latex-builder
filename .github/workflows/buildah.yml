@@ -4,8 +4,6 @@ on:
   push:
     branches:
     - master
-  schedule:
-    - cron: "0 0 * * 3"
 
 jobs:
   buildah:
@@ -24,6 +22,7 @@ jobs:
       run: |
         echo "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/containers.list
         wget -qO - 'https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key' | sudo apt-key add -
+        sudo apt-get update
         sudo apt-get install buildah -y
         sudo sed -i 's/driver = "overlay"/driver = "vfs"/g' /etc/containers/storage.conf
 
