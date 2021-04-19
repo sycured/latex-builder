@@ -2,6 +2,8 @@
 
 My OCI image used in CI/CD to build my LaTeX documents
 
+[![ci](https://github.com/sycured/latex-builder/actions/workflows/buildah.yml/badge.svg?branch=master)](https://github.com/sycured/latex-builder/actions/workflows/buildah.yml)
+
 ## Packages installed
 
 - [biber](https://github.com/plk/biber)
