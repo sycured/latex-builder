@@ -2,8 +2,8 @@
 set -x
 
 mkimg=$(buildah from fedora:rawhide)
-buildah config --author='sycured' "$mkimg"
-buildah config --label Name='latex-builder' "$mkimg"
+buildah config --author="sycured" --label Name="latex-builder" --label org.opencontainers.image.source="https://github.com/sycured/latex-builder" "$mkimg"
+buildah run "$mkimg" -- useradd -ms /bin/bash latex
 buildah run "$mkimg" -- dnf upgrade -y
 buildah run "$mkimg" -- dnf install -y biber cmake ghostscript ninja-build python3-pip rclone texlive texlive-chktex texlive-luatex texlive-collection-latexextra texlive-collection-fontsextra
 buildah run "$mkimg" -- pip install --no-cache-dir blacktex
@@ -14,6 +14,7 @@ mv UseLATEX/UseLATEX.cmake "$mntimg"/usr/share/cmake/Modules/
 git clone https://github.com/sycured/pdfcompressor.git
 mv pdfcompressor/pdfcompressor "$mntimg"/usr/local/bin/
 chmod 555 "$mntimg"/usr/local/bin/pdfcompressor
+buildah config --user=latex --workingdir='/home/latex' "$mkimg"
 buildah unmount "$mkimg"
 buildah commit --squash "$mkimg" "latex-builder"
 buildah rm "$mkimg"
