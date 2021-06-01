@@ -28,7 +28,7 @@ jobs:
 
     - name: Registry - Login
       env:
-        githubtoken: ${{ secrets.GITHUBTOKEN }}
+        githubtoken: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "$githubtoken" | sudo buildah login -u sycured --password-stdin ghcr.io
 
