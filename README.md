@@ -12,7 +12,6 @@ My OCI image used in CI/CD to build my LaTeX documents
 - [cmake](https://cmake.org/)
 - [ghostscript](https://www.ghostscript.com/)
 - [ninja](https://github.com/ninja-build/ninja)
-- [pdfcompressor](https://github.com/sycured/pdfcompressor)
 - [rclone](https://github.com/rclone/rclone)
 - [texlive](https://www.tug.org/texlive/)
 
