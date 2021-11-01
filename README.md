@@ -7,7 +7,6 @@ My OCI image used in CI/CD to build my LaTeX documents
 ## Packages installed
 
 - [biber](https://github.com/plk/biber)
-- [blacktex](https://github.com/nschloe/blacktex)
 - [chktex](http://www.nongnu.org/chktex/)
 - [cmake](https://cmake.org/)
 - [ghostscript](https://www.ghostscript.com/)
