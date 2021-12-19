@@ -6,13 +6,13 @@ My OCI image used in CI/CD to build my LaTeX documents
 
 ## Packages installed
 
-- [biber](https://github.com/plk/biber)
 - [chktex](http://www.nongnu.org/chktex/)
 - [cmake](https://cmake.org/)
 - [ghostscript](https://www.ghostscript.com/)
 - [ninja](https://github.com/ninja-build/ninja)
 - [rclone](https://github.com/rclone/rclone)
 - [texlive](https://www.tug.org/texlive/)
+- [uselatex](https://gitlab.kitware.com/kmorel/UseLATEX)
 
 ## How to use it
 

@@ -1,11 +1,11 @@
 #!/bin/bash
 set -x
 
-mkimg=$(buildah from fedora:rawhide)
+mkimg=$(buildah from fedora-minimal:rawhide)
 buildah config --author="sycured" --label Name="latex-builder" --label org.opencontainers.image.source="https://github.com/sycured/latex-builder" "$mkimg"
+buildah run "$mkimg" -- microdnf upgrade -y
+buildah run "$mkimg" -- microdnf --nodocs install -y cmake ghostscript ninja-build rclone texlive texlive-chktex texlive-luatex texlive-collection-latexextra texlive-collection-fontsextra
 buildah run "$mkimg" -- useradd -ms /bin/bash latex
-buildah run "$mkimg" -- dnf upgrade -y
-buildah run "$mkimg" -- dnf install -y biber cmake ghostscript ninja-build rclone texlive texlive-chktex texlive-luatex texlive-collection-latexextra texlive-collection-fontsextra
 mntimg=$(buildah mount "$mkimg")
 rm -rf "$mntimg"/var/cache/dnf/*
 git clone https://gitlab.kitware.com/kmorel/UseLATEX.git
