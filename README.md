@@ -9,58 +9,44 @@ My OCI image used in CI/CD to build my LaTeX documents
 - [chktex](http://www.nongnu.org/chktex/)
 - [cmake](https://cmake.org/)
 - [ghostscript](https://www.ghostscript.com/)
+- [git](https://git-scm.com)
 - [ninja](https://github.com/ninja-build/ninja)
+- [poppler](https://poppler.freedesktop.org)
 - [rclone](https://github.com/rclone/rclone)
 - [texlive](https://www.tug.org/texlive/)
 - [uselatex](https://gitlab.kitware.com/kmorel/UseLATEX)
 
 ## How to use it
-
-### CLI
-
-```shell
-docker run --rm -v /Volumes/NAS/git_repositories/cv:/shared -v /tmp:/tmp -w /shared --entrypoint /shared/run.sh ghcr.io/sycured/latex-builder
-```
-
-### GitHub Actions
-
-This is the workflow used for my private repository about my resume.
-
-```yaml
-name: ci
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: [self-hosted, Linux, oraclecloud]
-    container:
-      image: ghcr.io/sycured/latex-builder:latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install rclone config file
-        env:
-          rconf: ${{ secrets.RCLONE_CONF }}
-        run: |
-          echo "$rconf" | base64 -d > /rclone.conf
-      - name: Build
-        run: ./run.sh
-      - name: Send pdf to objstore
-        env:
-          objstore: ${{ secrets.S3 }}
-        run: "rclone --config /rclone.conf copy /tmp/build_cv/cv-en.pdf $objstore:"
-```
-
-This is `run.sh`:
+### SHELL script
+Example for `run.sh`:
 ```shell
 #!/bin/bash
 
 BD="/tmp/build_cv"
 CD=$(pwd)
 rm -rf "$BD"
-mkdir "$BD" && cd "$BD" && cmake -G Ninja "$CD" && ninja &&
-    pdfcompressor -o cv-en.pdf -i english.pdf
+mkdir "$BD" && cd "$BD" && cmake -G Ninja "$CD" && ninja
 ```
+### Basic usage
+#### CLI
+
+```shell
+docker run --rm -v /Volumes/NAS/git_repositories/cv:/shared -v /tmp:/tmp -w /shared ghcr.io/sycured/latex-builder
+```
+
+### Advanced usage
+
+#### Environment variables
+
+| Name | Description | Default |
+| --- | --- | --- |
+| GIT_BRANCH | which branch/tag/commit to clone                  | main |
+| GIT_HOST | git server                                        | github.com |
+| GIT_PRIVATE_KEY | ssh private key (base64)                          | |
+| GIT_REPO | repository to clone (ex: _sycured/latex-builder_) | |
+| GIT_TOKEN | personal access token (plaintext) | |
+| GIT_USER | git username needed when using GIT_TOKEN (ex: _sycured_) | |
+| RCLONE_CONFIG | rclone configuration (base64) | |
+| RCLONE_LOCAL_PATH | rclone copy source (local path) | |
+| RCLONE_REMOTE_PATH | rsync copy destination (remote path) | |
+| SCRIPT | shell script to execute | `./run.sh` |
