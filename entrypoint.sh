@@ -17,6 +17,12 @@ if [[ -n "${GIT_REPO}" ]]; then
     fi
 
     if [[ -n "${GIT_TOKEN}" ]]; then
+
+        if [[ -z "${GIT_USER}" ]]; then
+            echo "GIT_USER must be set when using GIT_TOKEN"
+            exit 1
+        fi
+
         echo "https://${GIT_USER}:${GIT_TOKEN}@${GIT_HOST:-github.com}" >/home/latex/.git-credentials
         git config --global credential.helper store
         URL="https://${GIT_HOST:-github.com}/${GIT_REPO}"
