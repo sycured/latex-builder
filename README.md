@@ -33,20 +33,19 @@ mkdir "$BD" && cd "$BD" && cmake -G Ninja "$CD" && samu
 ```shell
 docker run --rm -v /Volumes/NAS/git_repositories/cv:/shared -v /tmp:/tmp -w /shared ghcr.io/sycured/latex-builder
 ```
-
-### Advanced usage
-
 #### Environment variables
 
-| Name | Description | Default |
-| --- | --- | --- |
-| GIT_BRANCH | which branch/tag/commit to clone                  | main |
-| GIT_HOST | git server                                        | github.com |
-| GIT_PRIVATE_KEY | ssh private key (base64)                          | |
-| GIT_REPO | repository to clone (ex: _sycured/latex-builder_) | |
-| GIT_TOKEN | personal access token (plaintext) | |
-| GIT_USER | git username needed when using GIT_TOKEN (ex: _sycured_) | |
-| RCLONE_CONFIG | rclone configuration (base64) | |
-| RCLONE_LOCAL_PATH | rclone copy source (local path) | |
-| RCLONE_REMOTE_PATH | rsync copy destination (remote path) | |
-| SCRIPT | shell script to execute | `./run.sh` |
+| Name                  | Description                                               | Default       |
+| --------------------- | --------------------------------------------------------- | :-----------: |
+| GIT_BRANCH            | which branch/tag/commit to clone                          | main          |
+| GIT_HOST              | git server                                                | github.com    |
+| GIT_PRIVATE_KEY       | ssh private key (base64)                                  |               |
+| GIT_REPO              | repository to clone (ex: _sycured/latex-builder_)         |               |
+| GIT_TOKEN             | personal access token (plaintext)                         |               |
+| GIT_USER              | git username needed when using GIT_TOKEN (ex: _sycured_)  |               |
+| RCLONE_ACTION         | define which action rclone will run                       | copy          |
+| RCLONE_CONFIG         | rclone configuration (plaintext)                          |               |
+| RCLONE_CONFIG_B64     | rclone configuration (base64)                             |               |
+| RCLONE_LOCAL_PATH     | rclone copy source (local path)                           |               |
+| RCLONE_REMOTE_PATH    | rsync copy destination (remote path)                      |               |
+| SCRIPT                | shell script to execute                                   | `./run.sh`    |
