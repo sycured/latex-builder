@@ -10,9 +10,9 @@ My OCI image used in CI/CD to build my LaTeX documents
 - [cmake](https://cmake.org/)
 - [ghostscript](https://www.ghostscript.com/)
 - [git](https://git-scm.com)
-- [ninja](https://github.com/ninja-build/ninja)
 - [poppler](https://poppler.freedesktop.org)
 - [rclone](https://github.com/rclone/rclone)
+- [samurai](https://github.com/michaelforney/samurai)
 - [texlive](https://www.tug.org/texlive/)
 - [uselatex](https://gitlab.kitware.com/kmorel/UseLATEX)
 
@@ -25,7 +25,7 @@ Example for `run.sh`:
 BD="/tmp/build_cv"
 CD=$(pwd)
 rm -rf "$BD"
-mkdir "$BD" && cd "$BD" && cmake -G Ninja "$CD" && ninja
+mkdir "$BD" && cd "$BD" && cmake -G Ninja "$CD" && samu
 ```
 ### Basic usage
 #### CLI
