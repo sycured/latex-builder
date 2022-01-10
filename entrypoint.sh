@@ -1,10 +1,8 @@
 #!/bin/bash
 set -e
 
-if [[ -n "${RCLONE_CONFIG}" ]]; then
-    mkdir -p /home/latex/.config/rclone
-    base64 -d <<<"${RCLONE_CONFIG}" >/home/latex/.config/rclone/rclone.conf
-fi
+[[ -n "${RCLONE_CONFIG_B64}" ]] && base64 -d <<<"${RCLONE_CONFIG_B64}" >/home/latex/.config/rclone/rclone.conf
+[[ -n "${RCLONE_CONFIG}" ]] && cat <<<"${RCLONE_CONFIG}" >/home/latex/.config/rclone/rclone.conf
 
 if [[ -n "${GIT_REPO}" ]]; then
 
@@ -30,11 +28,9 @@ if [[ -n "${GIT_REPO}" ]]; then
 
     git clone -b "${GIT_BRANCH:-main}" --single-branch "${URL}" /home/latex/cloned
     cd /home/latex/cloned
-    exec "${SCRIPT:-./run.sh}"
+    "${SCRIPT:-./run.sh}"
 
-    if [[ -n "${RCLONE_CONFIG}" ]]; then
-        rsync copy "${RCLONE_LOCAL_PATH}" "${RCLONE_REMOTE_PATH}"
-    fi
+    [[ -n "${RCLONE_LOCAL_PATH}" && -n "${RCLONE_REMOTE_PATH}" ]] && rsync "${RCLONE_ACTION:-copy}" "${RCLONE_LOCAL_PATH}" "${RCLONE_REMOTE_PATH}"
 
 else
     exec "$@"
