@@ -34,6 +34,8 @@ jobs:
         echo "$quayiopassword" | sudo buildah login -u "sycured+github_action" --password-stdin quay.io
 
     - name: Build
+      env:
+        BUILDAH_HISTORY: true
       run: sudo ./run.sh
 
     - name: Push to registry
