@@ -31,7 +31,7 @@ mkdir "$BD" && cd "$BD" && cmake -G Ninja "$CD" && samu
 #### CLI
 
 ```shell
-docker run --rm -v /Volumes/NAS/git_repositories/cv:/shared -v /tmp:/tmp -w /shared ghcr.io/sycured/latex-builder
+docker run --rm -v /Volumes/NAS/git_repositories/cv:/shared -v /tmp:/tmp -w /shared quay.io/sycured/latex-builder
 ```
 #### Environment variables
 

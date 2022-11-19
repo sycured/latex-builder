@@ -29,20 +29,15 @@ jobs:
 
     - name: Registry - Login
       env:
-        githubtoken: ${{ secrets.PAT_PUSH }}
+        quayiopassword: ${{ secrets.QUAYIO_PASSWORD }}
       run: |
-        echo "$githubtoken" | sudo buildah login -u sycured --password-stdin ghcr.io
+        echo "$quayiopassword" | sudo buildah login -u "sycured+github_action" --password-stdin quay.io
 
     - name: Build
       run: sudo ./run.sh
 
     - name: Push to registry
-      run: sudo buildah push latex-builder:latest docker://ghcr.io/sycured/latex-builder:latest
+      run: sudo buildah push latex-builder:latest docker://quay.io/sycured/latex-builder:latest
 
     - name: Registry - Logout
-      run: sudo buildah logout ghcr.io
-
-    - uses: actions/delete-package-versions@v3
-      with:
-        package-name: 'latex-builder'
-        min-versions-to-keep: 2
+      run: sudo buildah logout quay.io
